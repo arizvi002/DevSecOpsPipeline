@@ -1,5 +1,6 @@
 pipeline {
-    node('slave') {}
+    agent { label 'slave' }
+
     environment {
         ECR_URI = '060849198576.dkr.ecr.us-west-2.amazonaws.com/dev_sec_ops_app'
         AWS_REGION = 'us-west-2' // Replace with your AWS region
