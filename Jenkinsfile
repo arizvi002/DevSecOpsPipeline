@@ -8,8 +8,9 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Pull code from GitHub
                 checkout scm
+                sh 'git reset --hard'
+                sh 'git clean -fdx'
             }
         }
         stage('Build') {
