@@ -8,11 +8,14 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
-                sh 'git reset --hard'
-                sh 'git clean -fdx'
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: '*/main']], // Ensure the correct branch
+                    userRemoteConfigs: [[url: 'https://github.com/arizvi002/DevSecOpsPipeline.git']],
+                    extensions: [[$class: 'WipeWorkspace']] // Cleans up the workspace
+                ])
             }
-        }
+            }
         stage('Build') {
             steps {
                 // Build Docker image
