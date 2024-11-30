@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 app.get('/', (req, res) => {
-    res.send('Hello, World! This is a new Node.js app running in a container!');
+    res.send('Hello, World! This is a Node.js app running in a container! Checking if webhook is working');
 });
 
 const PORT = process.env.PORT || 3000;
