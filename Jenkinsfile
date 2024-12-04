@@ -29,6 +29,22 @@ pipeline {
                 sh 'npm test'
             }
         }
+        stage('SonarQube Scan') {
+            environment {
+                scannerHome = tool 'SonarQube' // Replace with the SonarScanner tool name configured in Jenkins
+            }
+            steps {
+                withSonarQubeEnv('SonarQube') { // Replace 'SonarQubeServer' with your SonarQube server name
+                    sh '''
+                    ${scannerHome}/bin/sonar-scanner \
+                    -Dsonar.projectKey=DevSecOpsApp \
+                    -Dsonar.sources=. \
+                    -Dsonar.host.url=$SONAR_HOST_URL \
+                    -Dsonar.login=$SONAR_AUTH_TOKEN
+                    '''
+                }
+            }
+        }
         stage('Push to ECR') {
             steps {
                 // Login to Amazon ECR and push the Docker image
