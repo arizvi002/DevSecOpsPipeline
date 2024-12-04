@@ -30,9 +30,6 @@ pipeline {
             }
         }
         stage('SonarQube Scan') {
-            environment {
-                scannerHome = tool 'SonarQube' // Replace with the SonarScanner tool name configured in Jenkins
-            }
             steps {
                 withSonarQubeEnv('SonarQube') { // Replace 'SonarQubeServer' with your SonarQube server name
                     sh '''
