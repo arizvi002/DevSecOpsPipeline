@@ -3,14 +3,14 @@ pipeline {
 
     environment {
         ECR_URI = '060849198576.dkr.ecr.us-west-2.amazonaws.com/dev_sec_ops_app'
-        AWS_REGION = 'us-west-2' // Replace with your AWS region
+        AWS_REGION = 'us-west-2' 
     }
     stages {
         stage('Checkout') {
             steps {
                 checkout([
                     $class: 'GitSCM',
-                    branches: [[name: '*/main']], // Ensure the correct branch
+                    branches: [[name: '*/main']], 
                     userRemoteConfigs: [[url: 'https://github.com/arizvi002/DevSecOpsPipeline.git']],
                     extensions: [[$class: 'WipeWorkspace']] // Cleans up the workspace
                 ])
@@ -30,8 +30,11 @@ pipeline {
             }
         }
         stage('SonarQube Scan') {
+            environment {
+                scannerHome = tool 'SonarScanner' 
+            }
             steps {
-                withSonarQubeEnv('SonarQube') { // Replace 'SonarQubeServer' with your SonarQube server name
+                withSonarQubeEnv('SonarQube') { 
                     sh '''
                     ${scannerHome}/bin/sonar-scanner \
                     -Dsonar.projectKey=DevSecOpsApp \
